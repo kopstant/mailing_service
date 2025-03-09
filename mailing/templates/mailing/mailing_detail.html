@@ -1,0 +1,17 @@
+{% extends "mailing/base.html" %}
+
+{% block content %}
+  <h2>Рассылка</h2>
+  <p><strong>Начало:</strong> {{ mailing.first_sent_at }}</p>
+  <p><strong>Окончание:</strong> {{ mailing.end_sent_at }}</p>
+  <p><strong>Статус:</strong> {{ mailing.status }}</p>
+  <p><strong>Сообщение:</strong> {{ mailing.message.subject }}</p>
+  <p><strong>Получатели:</strong></p>
+  <ul>
+    {% for recipient in mailing.recipients.all %}
+      <li>{{ recipient.full_name }} ({{ recipient.email }})</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'mailing:mailing_update' mailing.pk %}">Редактировать</a>
+  <a href="{% url 'mailing:mailing_list' %}">Назад</a>
+{% endblock %}

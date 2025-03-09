@@ -1,0 +1,15 @@
+{% extends "mailing/base.html" %}
+
+{% block content %}
+  <h2>Список рассылок</h2>
+  <a href="{% url 'mailing:mailing_create' %}">Добавить рассылку</a>
+  <ul>
+    {% for mailing in mailings %}
+      <li>
+        <a href="{% url 'mailing:mailing_detail' mailing.pk %}">{{ mailing }}</a> - {{ mailing.status }}
+        <a href="{% url 'mailing:mailing_update' mailing.pk %}">Редактировать</a>
+        <a href="{% url 'mailing:mailing_delete' mailing.pk %}">Удалить</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
