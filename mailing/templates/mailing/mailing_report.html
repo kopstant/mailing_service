@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Отчет по попыткам рассылок</h2>
+  <table border="1">
+    <tr>
+      <th>Дата</th>
+      <th>Рассылка</th>
+      <th>Статус</th>
+      <th>Ответ сервера</th>
+    </tr>
+    {% for attempt in attempts %}
+      <tr>
+        <td>{{ attempt.attempt_time }}</td>
+        <td>{{ attempt.mailing }}</td>
+        <td>{{ attempt.status }}</td>
+        <td>{{ attempt.server_response }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">Нет данных</td></tr>
+    {% endfor %}
+  </table>
+  <a href="{% url 'mailing_list' %}">Назад</a>
+{% endblock %}

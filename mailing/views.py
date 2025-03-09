@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 from mailing.forms import RecipientForm, MessageForm, MailingForm
-from mailing.models import Recipient, Mailing, Message
+from mailing.models import Recipient, Mailing, Message, TryMailing
 
 
 # CRUD для модели Получатель рассылки
@@ -103,3 +104,32 @@ class MailingDeleteView(DeleteView):  # Удаление
     model = Mailing
     template_name = 'mailing/mailing_confirm_delete.html'
     success_url = reverse_lazy('mailing:mailing_list')
+
+
+def send_mailing_view(request, pk):
+    mailing = get_object_or_404(Mailing, pk=pk)
+    if mailing.send_mails():
+        messages.success(request, "Рассылка успешно отправлена!")
+    else:
+        messages.error(request, "Ошибка отправки рассылки.")
+
+    return redirect('mailing_list')
+
+
+def mailing_report(request):
+    attempts = TryMailing.objects.all().order_by('-attempt_time')
+    return render(request, 'mailing/mailing_report.html', {'attempts': attempts})
+
+
+def home_view(request):
+    """Главная страница со статистикой"""
+    total_mailings = Mailing.objects.count()  # Всего рассылок
+    active_mailings = Mailing.objects.filter(status='started').count()  # Кол-во активных рассылок
+    unique_recipients = Recipient.objects.distinct().count()  # Уникальные получатели
+
+    context = {
+        'total_mailings': total_mailings,
+        'active_mailings': active_mailings,
+        'unique_recipients': unique_recipients,
+    }
+    return render(request, 'mailing/home.html', context)
