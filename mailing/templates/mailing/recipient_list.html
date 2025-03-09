@@ -1,0 +1,16 @@
+{% extends "mailing/base.html" %}
+
+{% block content %}
+  <h2>Список получателей</h2>
+  <a href="{% url 'mailing:recipient_create' %}">Добавить нового</a>
+  <ul>
+    {% for recipient in recipients %}
+      <li>
+        <a href="{% url 'mailing:recipient_detail' recipient.pk %}">{{ recipient.full_name }}</a>
+        ({{ recipient.email }}) - {{ recipient.comment }}
+        <a href="{% url 'mailing:recipient_update' recipient.pk %}">Редактировать</a>
+        <a href="{% url 'mailing:recipient_delete' recipient.pk %}">Удалить</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,96 @@
+<nav class="sidebar d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
+    <a href="#"
+       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <span class="fs-4">Меню</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a href="#"
+               class="nav-link link-body-emphasis {% if request.path == '/product/' %}active{% endif %}"
+               aria-current="page">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                </svg>
+                Главная
+            </a>
+        </li>
+        <li>
+            <a href="#"
+               class="nav-link link-body-emphasis {% if request.path == '/product/create/' %}active{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                </svg>
+                Добавление продуктов
+            </a>
+        </li>
+        <li>
+            <a href="#"
+               class="nav-link link-body-emphasis {% if request.path == '/blogs/' %}active{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                </svg>
+                Посты
+            </a>
+        </li>
+        <li>
+            <a href="#"
+               class="nav-link link-body-emphasis {% if request.path == '/blogs/create/' %}active{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                </svg>
+                Создать новый пост
+            </a>
+        </li>
+        <li>
+            <a href="#"
+               class="nav-link link-body-emphasis {% if request.path == '/contact/' %}active{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                </svg>
+                Контакты
+            </a>
+        </li>
+        <hr>
+        {% else %}
+        <li>
+            <a href="#"
+               class="nav-link link-body-emphasis {% if request.path == '/contact/' %}active{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                </svg>
+                Войти
+            </a>
+        </li>
+        <li>
+            <a href="#"
+               class="nav-link link-body-emphasis {% if request.path == '/contact/' %}active{% endif %}">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                </svg>
+                Регистрация
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    <hr>
+    {% if user.is_authenticated %}
+    <div class="dropdown">
+        <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="Avatar" width="32" height="32" class="rounded-circle me-2">
+            {% else %}
+            <p>No avatar uploaded.</p>
+            {% endif %}
+            <strong>{{ user.username }}</strong>
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+            <li><a class="dropdown-item" href="#">Профиль</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <form method="post" action="#" style="display: inline">
+                    {% csrf_token %}
+                    <button type="submit" class="dropdown-item">Выход</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
+</nav>

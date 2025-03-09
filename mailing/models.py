@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 from users.models import CustomUser
 
@@ -7,7 +6,7 @@ NULLABLE = {'blank': True, 'null': True}
 
 # Модель получателя рассылки
 class Recipient(models.Model):
-    email = models.CharField(unique=True, max_length=100, verbose_name='email')
+    email = models.EmailField(unique=True, max_length=100, verbose_name='email')
     full_name = models.CharField(max_length=100, verbose_name="full Name", **NULLABLE)
     comments = models.TextField(verbose_name="comments", **NULLABLE)
     owner = models.ForeignKey(CustomUser, verbose_name="Owner", on_delete=models.CASCADE, **NULLABLE)
