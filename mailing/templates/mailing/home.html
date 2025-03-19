@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>{% extends "mailing/base.html" %}
-
+{% extends 'mailing/base.html' %}
+{% block title %}Главная{% endblock %}
 {% block content %}
     <div class="container">
-        <h1>Статистика</h1>
-        <div class="row">
+        <h1 class="text-center mb-5">Статистика</h1>
+        <div class="row text-center">
             <div class="col-md-4">
                 <div class="card text-bg-primary mb-3">
                     <div class="card-header">Всего рассылок</div>
